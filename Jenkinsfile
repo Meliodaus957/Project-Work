@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        // Указываем путь к установленному Allure (если он установлен вручную)
         ALLURE_HOME = '/opt/allure/bin'
     }
 
@@ -22,7 +23,6 @@ pipeline {
                     pip install -r requirements.txt
                     pip install --upgrade webdriver-manager
                     pip install allure-pytest
-
                 '''
             }
         }
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     // Генерация отчета Allure, путь к результатам должен быть указан правильно
-                    sh 'allure generate allure-results --clean -o allure-report'
+                    sh "${ALLURE_HOME}/allure generate allure-results --clean -o allure-report"
                 }
             }
         }
@@ -49,7 +49,8 @@ pipeline {
             steps {
                 script {
                     allure([
-                        results: [[path: 'allure-results']]
+                        results: [[path: 'allure-results']],
+                        report: 'allure-report'
                     ])
                 }
             }
