@@ -75,8 +75,8 @@ pipeline {
             steps {
                 // Публикация отчета с использованием плагина Allure Jenkins
                 allure(
-                    results: [[path: 'allure-results']],
-                    report: 'allure-report'
+                    name: [[path: 'allure-results']],
+                    home: 'allure-report'
                 )
             }
         }
