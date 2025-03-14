@@ -29,15 +29,15 @@ def pytest_runtest_makereport(item, call):
 
 
 @pytest.fixture(autouse=True)
-def screenshot_on_failure(request, browser):
+def screenshot_on_failure(request, driver):
     """Снимает скриншот при падении теста и добавляет в отчёт Allure"""
     yield
     if hasattr(request.node, "rep_call") and request.node.rep_call.failed:
-        if browser:
+        if driver:
             timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
             screenshot_name = f"screenshot_{timestamp}.png"
             screenshot_path = os.path.join("allure-results", screenshot_name)
 
             os.makedirs("allure-results", exist_ok=True)
-            browser.save_screenshot(screenshot_path)
+            driver.save_screenshot(screenshot_path)
             allure.attach.file(screenshot_path, name="Ошибка - скриншот", attachment_type=allure.attachment_type.PNG)
