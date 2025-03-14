@@ -48,10 +48,11 @@ pipeline {
 
         stage('Publish Allure Report') {
             steps {
-                // Публикация отчета с использованием плагина Allure Jenkins
-                allure(
-                    results: [[path: 'allure-results']],
-                )
+                script {
+                    allure([
+                        results: [[path: 'allure-results']]
+                    ])
+                }
             }
         }
     }
