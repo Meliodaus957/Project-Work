@@ -68,7 +68,7 @@ pipeline {
                         reportDir: 'allure-report',
                         reportFiles: 'index.html',
                         keepAll: true,
-                        alwaysLinkToLastBuild: false
+                        alwaysLinkToLastBuild: true
                     ])
                 }
             }
