@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Meliodaus957/Project-Work.git' // Укажи свой репозиторий
+                git branch: 'main', url: 'https://github.com/Meliodaus957/Project-Work.git'
             }
         }
 
