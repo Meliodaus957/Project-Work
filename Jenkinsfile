@@ -4,8 +4,9 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Meliodaus957/Project-Work.git'
-                credentialsId: 'b8598cbf-4b65-4202-a7f3-42b9d10afab2'
+                git branch: 'main',
+                    url: 'https://github.com/Meliodaus957/Project-Work.git',
+                    credentialsId: 'b8598cbf-4b65-4202-a7f3-42b9d10afab2'
             }
         }
 
