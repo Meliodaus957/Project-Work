@@ -49,7 +49,7 @@ pipeline {
             steps {
                 // Публикация сгенерированного отчета
                 allure([
-                    report: 'allure-report'
+                    allureReport: 'allure-report'
                 ])
             }
         }
