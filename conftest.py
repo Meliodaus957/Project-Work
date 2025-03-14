@@ -49,7 +49,7 @@ def driver(request):
     )
 
     browser.maximize_window()
-    browser.get(base_url)
+
 
     yield browser
 
