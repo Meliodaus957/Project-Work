@@ -48,8 +48,8 @@ pipeline {
             steps {
                 script {
                     allure([
-                        results: [[path: 'allure-results']],
-                        report: 'allure-report'
+                        results: [[path: 'allure-results']],  // Укажите правильный путь
+                        report: 'allure-report'  // Путь, куда будет сгенерирован отчет
                     ])
                 }
             }
