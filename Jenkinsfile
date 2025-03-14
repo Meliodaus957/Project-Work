@@ -16,6 +16,7 @@ pipeline {
                     python3 -m venv venv
                     . venv/bin/activate  # Активируем виртуальное окружение
                     pip install -r requirements.txt
+                    pip install --upgrade webdriver-manager
                 '''
             }
         }
