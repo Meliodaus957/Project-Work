@@ -54,5 +54,39 @@ pipeline {
                 )
             }
         }
+    post {
+        always {
+            // Отправка junit отчета в Jenkins
+            junit '**/junit.xml'
+
+            // Генерация отчета Allure
+            script {
+                if (fileExists('allure-report')) {
+                    publishHTML(target: [
+                        reportName: 'Allure Report',
+                        reportDir: 'allure-report',
+                        reportFiles: 'index.html',
+                        keepAll: true,
+                        alwaysLinkToLastBuild: false
+                    ])
+                }
+            }
+        }
+
+        success {
+            echo 'Pipeline succeeded!'
+        }
+
+        failure {
+            echo 'Pipeline failed!'
+        }
+
+        unstable {
+            echo 'Pipeline marked as unstable'
+        }
+
+        changed {
+            echo 'Pipeline status has changed'
+        }
     }
 }
