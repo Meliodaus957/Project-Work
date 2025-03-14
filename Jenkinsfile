@@ -30,7 +30,8 @@ pipeline {
         stage('Generate Allure Report') {
             steps {
                 allure([
-                    results: [[path: 'allure-results']]
+                    includeProperties: false,  // Не включаем дополнительные свойства
+                    results: 'allure-results'  // Путь к результатам Allure
                 ])
             }
         }
