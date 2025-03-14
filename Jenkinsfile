@@ -32,7 +32,7 @@ pipeline {
             steps {
                 sh '''
                     . venv/bin/activate
-                    pytest tests --junit-xml=junit.xml --alluredir=allure-results
+                    pytest tests --junit-xml=junit.xml
                 '''
             }
         }
