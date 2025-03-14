@@ -8,7 +8,7 @@ def pytest_addoption(parser):
     """Добавление опций командной строки для pytest."""
     parser.addoption("--browser", action="store", default="chrome",
                      help="Choose browser: chrome, firefox")
-    parser.addoption("--executor", action="store", default="localhost")
+    parser.addoption("--executor", action="store", default="selenoid")
     parser.addoption("--bv")
 
 
