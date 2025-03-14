@@ -4,6 +4,7 @@ pipeline {
     environment {
         // Указываем путь к установленному Allure (если он установлен вручную)
         ALLURE_HOME = '/opt/allure/bin'
+        PATH = "${env.PATH}:${env.ALLURE_HOME}"
     }
 
     stages {
@@ -39,7 +40,7 @@ pipeline {
         stage('Generate Allure Report') {
             steps {
                 script {
-                    sh "${ALLURE_HOME}/allure generate allure-results --clean -o allure-report"
+                    sh 'allure generate allure-results --clean -o allure-report'
                 }
             }
         }
@@ -48,8 +49,8 @@ pipeline {
             steps {
                 script {
                     allure([
-                        results: [[path: 'allure-results']],  // Укажите правильный путь
-                        report: 'allure-report'  // Путь, куда будет сгенерирован отчет
+                        results: [[path: 'allure-results']],
+                        report: 'allure-report'
                     ])
                 }
             }
