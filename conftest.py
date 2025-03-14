@@ -1,3 +1,5 @@
+import os
+import time
 import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -53,4 +55,20 @@ def driver(request):
 
     browser.quit()
 
+# Хук для снятия скриншота в случае неудачи теста
+def pytest_runtest_makereport(item, call):
+    """Обрабатывает отчёт о тесте и прикладывает скриншот, если тест не прошёл."""
+    if call.when == "call" and call.excinfo is not None:
+        # Получаем драйвер из фикстуры
+        driver = item.funcargs.get('driver')
+
+        if driver:
+            # Делаем снимок экрана и сохраняем в директории screenshots
+            screenshot_dir = 'screenshots'
+            os.makedirs(screenshot_dir, exist_ok=True)
+            screenshot_name = f"{item.nodeid.replace('::', '_')}_{int(time.time())}.png"
+            screenshot_path = os.path.join(screenshot_dir, screenshot_name)
+
+            driver.save_screenshot(screenshot_path)
+            print(f"Screenshot saved at {screenshot_path}")
 
