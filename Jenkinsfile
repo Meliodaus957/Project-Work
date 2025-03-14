@@ -39,7 +39,6 @@ pipeline {
         stage('Generate Allure Report') {
             steps {
                 script {
-                    // Генерация отчета Allure, путь к результатам должен быть указан правильно
                     sh "${ALLURE_HOME}/allure generate allure-results --clean -o allure-report"
                 }
             }
