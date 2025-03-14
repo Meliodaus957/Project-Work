@@ -1,25 +1,30 @@
 import allure
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 
 
 @pytest.fixture(scope="function")
 def driver():
-    # Настройка драйвера
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless")  # Запуск браузера в фоновом режиме (без графического интерфейса)
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
+    # Настройка опций Chrome
+    options = Options()
+    options.add_argument("--headless")  # Запуск браузера в фоновом режиме
+    options.add_argument("--no-sandbox")  # Убираем sandbox (для CI/CD)
+    options.add_argument("--disable-dev-shm-usage")  # Отключение использования shared memory
+    options.add_argument("--remote-debugging-port=9222")  # Для отладки, если нужно
 
     # Создание экземпляра драйвера
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    driver = webdriver.Chrome(
+        service=Service(ChromeDriverManager().install()),  # Устанавливаем драйвер с помощью WebDriverManager
+        options=options
+    )
 
-    # Перед каждым тестом выполняется установка драйвера
+    # Возвращаем драйвер для использования в тестах
     yield driver
 
-    # После выполнения теста драйвер закрывается
+    # Закрытие драйвера после выполнения теста
     driver.quit()
 
 
