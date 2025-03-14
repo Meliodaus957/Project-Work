@@ -38,22 +38,19 @@ pipeline {
             }
         }
 
-        stage('Generate Allure Report') {
+        stage('Allure Report') {
             steps {
-                script {
-                    // Генерация отчета Allure, путь к результатам должен быть указан правильно
-                    sh 'allure generate allure-results --clean -o allure-report'
-                }
+                // Генерация отчета из результатов
+                sh 'allure generate allure-results --clean -o allure-report'
             }
         }
 
         stage('Publish Allure Report') {
             steps {
-                script {
-                    allure([
-                        results: [[path: 'allure-results']]
-                    ])
-                }
+                // Публикация сгенерированного отчета
+                allure([
+                    report: 'allure-report'
+                ])
             }
         }
     }
