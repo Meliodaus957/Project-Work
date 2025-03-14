@@ -8,18 +8,18 @@ import allure
 
 
 @pytest.fixture()
-def login_page(driver):
-    return LoginPage(driver)
+def login_page(driver, base_url):
+    return LoginPage(driver, base_url)
 
 
 @pytest.fixture()
-def inventory_page(driver):
-    return InventoryPage(driver)
+def inventory_page(driver, base_url):
+    return InventoryPage(driver, base_url)
 
 
 @pytest.fixture()
-def cart_page(driver):
-    return CartPage(driver)
+def cart_page(driver, base_url):
+    return CartPage(driver, base_url)
 
 @allure.title("Test login with valid credentials")
 @allure.step("Login with standard user credentials")
