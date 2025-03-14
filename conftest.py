@@ -48,7 +48,6 @@ def driver(request, base_url):
     )
 
     browser.maximize_window()
-    browser.get(base_url)  # Теперь browser открывает страницу с base_url
 
     yield browser
 
