@@ -52,7 +52,6 @@ pipeline {
                 script {
                     allure([
                         results: [[path: 'allure-results']]
-                        report: [['allure-report']]
                     ])
                 }
             }
