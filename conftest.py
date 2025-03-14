@@ -7,18 +7,19 @@ from selenium.webdriver.chrome.service import Service
 
 @pytest.fixture(scope="function")
 def driver():
-    # Автоматическая установка актуальной версии ChromeDriver
+    # Настройка драйвера
     options = webdriver.ChromeOptions()
-    # Можно добавить параметры для Chrome (например, headless)
-    options.add_argument("--headless")  # Опционально, если нужен headless режим
+    options.add_argument("--headless")  # Запуск браузера в фоновом режиме (без графического интерфейса)
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
 
-    # Использование WebDriverManager для загрузки и установки ChromeDriver
+    # Создание экземпляра драйвера
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-    # Возврат драйвера для использования в тестах
+    # Перед каждым тестом выполняется установка драйвера
     yield driver
 
-    # Очистка и закрытие браузера после завершения теста
+    # После выполнения теста драйвер закрывается
     driver.quit()
 
 

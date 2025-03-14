@@ -2,14 +2,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-class CartPage:
-    def __init__(self, driver):
-        self.driver = driver
+from pages.base_page import BasePage
 
-    def wait_for_element(self, locator, timeout=10):
-        WebDriverWait(self.driver, timeout).until(
-            EC.visibility_of_element_located(locator)
-        )
+
+class CartPage(BasePage):
 
     def get_cart_items(self):
         # Получаем все элементы товара в корзине
