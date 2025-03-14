@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   jenkins:
     image: jenkins/jenkins:lts
@@ -13,12 +11,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
-    networks:
-      - selenoid
+
 
 volumes:
   jenkins_home:
 
-networks:
-  selenoid:
-    external: true
