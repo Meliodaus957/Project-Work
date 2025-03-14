@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        ALLURE_HOME = '/opt/allure/bin'
+    }
+
     stages {
         stage('Checkout') {
             steps {
