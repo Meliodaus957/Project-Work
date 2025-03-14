@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh '''
                     python3 -m venv venv
-                    . venv/bin/activate  # Активируем виртуальное окружение
+                    . venv/bin/activate
                     pip install -r requirements.txt
                     pip install --upgrade webdriver-manager
                 '''
@@ -30,7 +30,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh '''
-                    . venv/bin/activate  # Снова активируем виртуальное окружение перед запуском тестов
+                    . venv/bin/activate
                     pytest tests --junit-xml=junit.xml --alluredir=allure-results
                 '''
             }
@@ -39,16 +39,6 @@ pipeline {
         stage('Generate Allure Report') {
             steps {
                 script {
-                    // Генерация отчета Allure, путь к результатам должен быть указан правильно
-                    sh 'allure generate allure-results --clean -o allure-report'
-                }
-            }
-        }
-
-        stage('Generate Allure Report') {
-            steps {
-                script {
-                    // Генерация отчета Allure, путь к результатам должен быть указан правильно
                     sh 'allure generate allure-results --clean -o allure-report'
                 }
             }
@@ -56,21 +46,15 @@ pipeline {
 
         stage('Publish Allure Report') {
             steps {
-                // Публикация отчета с использованием плагина Allure Jenkins
-                allure(
-                    results: [[path: 'allure-results']],
-                    report: 'allure-report'
-                )
+                allure resultsPath: 'allure-results'
             }
         }
     }
 
     post {
         always {
-            // Отправка junit отчета в Jenkins
             junit '**/junit.xml'
 
-            // Генерация отчета Allure
             script {
                 if (fileExists('allure-report')) {
                     publishHTML(target: [
