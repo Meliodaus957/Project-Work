@@ -40,20 +40,18 @@ pipeline {
 
         stage('Generate Allure Report') {
             steps {
-                script {
-                    // Генерация отчета Allure, путь к результатам должен быть указан правильно
-                    sh 'allure generate allure-results --clean -o allure-report'
-                }
+                // Генерация отчета Allure
+                sh 'allure generate allure-results --clean -o allure-report'
             }
         }
 
         stage('Publish Allure Report') {
             steps {
-                script {
-                    allure([
-                        results: [[path: 'allure-report']]
-                    ])
-                }
+                // Публикация отчета Allure в Jenkins
+                allure([
+                    results: 'allure-results', // Указываем путь к результатам тестов
+                    report: 'allure-report'    // Указываем путь к сгенерированному отчету
+                ])
             }
         }
     }
