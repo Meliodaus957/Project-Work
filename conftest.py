@@ -15,7 +15,7 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture()
-def driver(request, base_url):
+def driver(request):
     """Фикстура для инициализации веб-драйвера на основе аргументов."""
     browser_name = request.config.getoption("--browser")
     executor = request.config.getoption("--executor")
