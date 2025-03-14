@@ -22,8 +22,6 @@ pipeline {
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install -r requirements.txt
-                    pip install --upgrade webdriver-manager
-                    pip install allure-pytest
                 '''
             }
         }
