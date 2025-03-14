@@ -10,15 +10,9 @@ def pytest_addoption(parser):
     """Добавление опций командной строки для pytest."""
     parser.addoption("--browser", action="store", default="chrome",
                      help="Choose browser: chrome, firefox")
-    parser.addoption("--base_url", action="store", default="http://192.168.0.112:8081/",
-                     help="Base URL of the application")
     parser.addoption("--executor", action="store", default="selenoid")
     parser.addoption("--bv")
 
-@pytest.fixture()
-def base_url(request):
-    """Фикстура для получения base_url из параметров pytest"""
-    return request.config.getoption("--base_url")
 
 @pytest.fixture()
 def driver(request, base_url):
