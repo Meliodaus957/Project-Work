@@ -29,17 +29,6 @@ pipeline {
             }
         }
 
-        stage('Install Allure') {
-            steps {
-                sh '''
-                    # Установка Allure
-                    curl -o allure.tgz -L https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz
-                    tar -zxvf allure.tgz
-                    mv allure-${ALLURE_VERSION} /opt/allure
-                '''
-            }
-        }
-
         stage('Run Tests') {
             steps {
                 sh '''
