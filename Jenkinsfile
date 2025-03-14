@@ -2,6 +2,9 @@ pipeline {
     agent any
 
     environment {
+        // Указываем путь к установленному Allure (если он установлен вручную)
+        ALLURE_HOME = '/opt/allure/bin'
+        PATH = "${env.PATH}:${env.ALLURE_HOME}"
         ALLURE_RESULTS = 'allure-results'
         ALLURE_REPORT = 'allure-report'
     }
@@ -31,7 +34,7 @@ pipeline {
             steps {
                 sh '''
                     . venv/bin/activate
-                    pytest tests --junit-xml=junit.xml --alluredir=$ALLURE_RESULTS
+                    pytest tests --junit-xml=junit.xml
                 '''
             }
         }
@@ -58,6 +61,18 @@ pipeline {
     post {
         always {
             junit '**/junit.xml'
+
+            script {
+                if (fileExists('allure-report')) {
+                    publishHTML(target: [
+                        reportName: 'Allure Report',
+                        reportDir: 'allure-report',
+                        reportFiles: 'index.html',
+                        keepAll: true,
+                        alwaysLinkToLastBuild: false
+                    ])
+                }
+            }
         }
 
         success {
