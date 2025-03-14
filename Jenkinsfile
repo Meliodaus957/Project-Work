@@ -49,11 +49,8 @@ pipeline {
             steps {
                 // Публикация сгенерированного отчета
                 allure([
-                    includeProperties: false,
-                    jdk: '',
-                    reportBuildPolicy: 'ALWAYS',
-                    results: 'allure-results',
-                    report: 'allure-report'
+                     results: 'allure-results',
+                     report: 'allure-report'
                 ])
             }
         }
