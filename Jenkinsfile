@@ -23,6 +23,8 @@ pipeline {
                     . venv/bin/activate
                     pip install -r requirements.txt
                     pip install --upgrade webdriver-manager
+                    pip install allure-pytest
+
                 '''
             }
         }
@@ -69,19 +71,15 @@ pipeline {
         }
 
         success {
-            echo 'Pipeline succeeded!'
+            echo '✅ Pipeline успешно выполнен!'
         }
 
         failure {
-            echo 'Pipeline failed!'
+            echo '❌ Pipeline завершился с ошибками!'
         }
 
         unstable {
-            echo 'Pipeline marked as unstable'
-        }
-
-        changed {
-            echo 'Pipeline status has changed'
+            echo '⚠️ Pipeline нестабильный!'
         }
     }
 }
