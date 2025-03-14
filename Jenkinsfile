@@ -5,8 +5,6 @@ pipeline {
         ALLURE_VERSION = '2.32.2'
         ALLURE_HOME = '/opt/allure/bin'
         PATH = "${env.PATH}:${env.ALLURE_HOME}"
-        ALLURE_RESULTS = 'allure-results'
-        ALLURE_REPORT = 'allure-report'
     }
 
     stages {
@@ -43,18 +41,19 @@ pipeline {
         stage('Generate Allure Report') {
             steps {
                 script {
-                    // Генерируем отчет Allure
-                    sh "allure generate ${ALLURE_RESULTS} --clean -o ${ALLURE_REPORT}"
+                    // Генерация отчета Allure, путь к результатам должен быть указан правильно
+                    sh 'allure generate allure-results --clean -o allure-report'
                 }
             }
         }
 
         stage('Publish Allure Report') {
             steps {
-                allure(
-                    results: [[path: "${ALLURE_RESULTS}"]],
-                    report: "${ALLURE_REPORT}"
-                )
+                script {
+                    allure([
+                        results: [[path: 'allure-results']]
+                    ])
+                }
             }
         }
     }
