@@ -138,20 +138,31 @@ docker run --rm qa-autotests
  ┣ 📂 tests                # Тесты
 
  ┃ ┣ 📜 test_ui.py         # UI-тесты
+
  ┃ ┣ 📜 test_api.py        # API-тесты
+
  ┃ ┗ 📜 conftest.py        # Фикстуры Pytest
+
  ┣ 📂 logs                 # Логи тестов (с ротацией)
+
  ┣ 📜 logger.py            # Настройки логирования
+
  ┣ 📜 requirements.txt     # Зависимости проекта
+
  ┣ 📜 pytest.ini           # Настройки Pytest
+
  ┣ 📜 Dockerfile           # Конфигурация Docker
+
  ┗ 📜 README.md            # Документация
 
 
 
 📝 Контакты
+
 👨‍💻 Автор: QA Automation Engineer
+
 📧 Email: roman.temirgaleev@gmail.com
+
 🚀 GitHub: Meliodaus957
 
 
