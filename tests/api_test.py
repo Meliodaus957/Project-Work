@@ -5,9 +5,13 @@ BASE_URL = "https://reqres.in/api"
 
 
 # Тестирование получения списка пользователей
-@allure.feature("API: Пользователи")
-@allure.title("Получение списка пользователей (страница 1)")
-@allure.step("Отправка GET-запроса для получения списка пользователей на странице 1")
+@allure.feature(
+                "API: Пользователи")
+@allure.title(
+              "Получение списка пользователей (страница 1)")
+@allure.step(
+             "Отправка GET-запроса для получения списка пользователей на странице 1"
+             )
 def test_get_users_page_1():
     response = requests.get(f"{BASE_URL}/users?page=1")
     allure.attach(response.text, name="Ответ", attachment_type=allure.attachment_type.JSON)

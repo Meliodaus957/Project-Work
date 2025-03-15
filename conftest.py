@@ -14,7 +14,6 @@ def pytest_addoption(parser):
     parser.addoption("--bv")
 
 
-
 @pytest.fixture()
 def driver(request):
     """Фикстура для инициализации веб-драйвера на основе аргументов."""
@@ -55,6 +54,7 @@ def driver(request):
 
     browser.quit()
 
+
 # Хук для снятия скриншота в случае неудачи теста
 def pytest_runtest_makereport(item, call):
     """Обрабатывает отчёт о тесте и прикладывает скриншот, если тест не прошёл."""
@@ -71,4 +71,3 @@ def pytest_runtest_makereport(item, call):
 
             driver.save_screenshot(screenshot_path)
             print(f"Screenshot saved at {screenshot_path}")
-

@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from .base_page import BasePage
 
+
 class InventoryPage(BasePage):
     INVENTORY_ITEMS = (By.CLASS_NAME, "inventory_item")
     CART_BUTTON = (By.CLASS_NAME, "shopping_cart_link")

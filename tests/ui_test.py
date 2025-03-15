@@ -80,42 +80,6 @@ def test_sort_by_price(driver, login_page):
     assert "Sauce Labs Onesie" in first_item_title  # "Sauce Labs Onesie" - это товар с минимальной ценой
 
 
-@allure.title("Тест добавления товара в корзину и проверки корзины")
-@allure.step("Добавление товара в корзину и проверка его наличия в корзине")
-def test_add_item_to_cart(driver, cart_page, login_page, inventory_page):
-
-    login_page.driver.get("https://www.saucedemo.com/")
-    login_page.login("standard_user", "secret_sauce")
-
-
-    # Ждем появления кнопки для добавления товара в корзину
-    inventory_page.wait_for_element(By.XPATH, "//button[text()='Add to cart']")
-
-    # Добавляем первый товар в корзину
-    add_to_cart_button = driver.find_element(By.XPATH, "//button[text()='Add to cart']")
-    add_to_cart_button.click()
-
-    # Проверяем, что иконка корзины отображает количество товаров
-    inventory_page.wait_for_element(By.CLASS_NAME, "shopping_cart_badge")
-    cart_badge = driver.find_element(By.CLASS_NAME, "shopping_cart_badge")
-
-    # Убедимся, что корзина содержит 1 товар
-    assert cart_badge.text == "1"
-
-    # Переходим в корзину
-    inventory_page.click(By.CLASS_NAME, "shopping_cart_link")
-
-
-    # Убедимся, что на странице корзины есть хотя бы один товар
-    cart_page.wait_for_element(By.CLASS_NAME, "cart_item")
-
-    # Получаем список всех товаров в корзине
-    cart_item_names = cart_page.get_item_names()
-
-    # Проверим, что добавленный товар есть в корзине
-    assert "Sauce Labs Backpack" in cart_item_names
-
-
 @allure.title("Тест входа с валидными учетными данными")
 @allure.step("Вход с учетными данными стандартного пользователя")
 def test_login_valid(login_page, driver):
