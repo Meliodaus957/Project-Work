@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // Указываем путь к установленному Allure (если он установлен вручную)
         ALLURE_HOME = '/opt/allure/bin'
         PATH = "${env.PATH}:${env.ALLURE_HOME}"
     }

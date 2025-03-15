@@ -1,18 +1,48 @@
+version: "3.8"
+
+networks:
+  selenoid:
+    driver: bridge
+
 services:
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins
-    restart: always
+    restart: unless-stopped
     ports:
-      - "8082:8080"
-      - "50000:50000"
+      - "8082:8080"   # Jenkins UI
+      - "50000:50000" # Для агентов
     volumes:
       - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+    networks:
+      - selenoid
 
+  selenoid:
+    image: aerokube/selenoid:latest-release
+    container_name: selenoid
+    restart: unless-stopped
+    ports:
+      - "4444:4444"  # WebDriver API
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"  # Доступ к Docker
+      - selenoid_config:/etc/selenoid
+      - selenoid_logs:/opt/selenoid/video
+    command: ["-limit", "5", "-retry-count", "1"]
+    networks:
+      - selenoid
+
+  selenoid-ui:
+    image: aerokube/selenoid-ui:latest-release
+    container_name: selenoid-ui
+    restart: unless-stopped
+    ports:
+      - "8080:8080"  # UI для просмотра браузеров
+    networks:
+      - selenoid
+    depends_on:
+      - selenoid
 
 volumes:
   jenkins_home:
-
+  selenoid_config:
+  selenoid_logs:
