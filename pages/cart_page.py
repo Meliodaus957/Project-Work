@@ -5,7 +5,6 @@ from logger import logger
 
 class CartPage(BasePage):
 
-
     def get_cart_items(self):
         """Получаем все элементы товаров в корзине"""
         logger.info("Получение всех товаров из корзины")
@@ -16,7 +15,6 @@ class CartPage(BasePage):
         except Exception as e:
             logger.error(f"Ошибка при получении товаров из корзины: {e}")
             raise
-
 
     def get_item_names(self):
         """Получаем названия всех товаров в корзине"""

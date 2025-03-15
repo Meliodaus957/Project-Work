@@ -10,7 +10,6 @@ class APIClient:
         self.session = requests.Session()
         self.base_url = BASE_URL
 
-
     @allure.step("GET запрос к {endpoint} с параметрами: {params}")
     def get(self, endpoint, params=None):
         try:
@@ -27,7 +26,6 @@ class APIClient:
             logger.error(f"Ошибка GET {endpoint}: {str(e)}")
             raise
 
-
     @allure.step("POST запрос к {endpoint} с данными: {json}")
     def post(self, endpoint, json=None):
         try:
@@ -41,7 +39,6 @@ class APIClient:
         except requests.RequestException as e:
             logger.error(f"Ошибка POST {endpoint}: {str(e)}")
             raise
-
 
     @allure.step("PUT запрос к {endpoint} с данными: {json}")
     def put(self, endpoint, json=None):
@@ -57,7 +54,6 @@ class APIClient:
             logger.error(f"Ошибка PUT {endpoint}: {str(e)}")
             raise
 
-
     @allure.step("PATCH запрос к {endpoint} с данными: {json}")
     def patch(self, endpoint, json=None):
         try:
@@ -71,7 +67,6 @@ class APIClient:
         except requests.RequestException as e:
             logger.error(f"Ошибка PATCH {endpoint}: {str(e)}")
             raise
-
 
     @allure.step("DELETE запрос к {endpoint}")
     def delete(self, endpoint):

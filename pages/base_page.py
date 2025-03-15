@@ -5,6 +5,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from typing import Optional
 from logger import logger
 
+
 class BasePage:
     def __init__(self, driver: WebDriver) -> None:
         self.driver = driver

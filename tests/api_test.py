@@ -197,10 +197,7 @@ def test_delete_nonexistent_user(api, user_id):
     allure.attach(response.text, name=f"Ответ при удалении {user_id}", attachment_type=allure.attachment_type.JSON)
     logger.warning(f"DELETE /users/{user_id} - Статус: {response.status_code}")
 
-
     assert response.status_code in [204, 404, 400], f"❌ API вернул {response.status_code}, ожидался 204, 404 или 400!"
-
 
     if response.status_code == 204:
         logger.warning(f"❗ API {user_id}: удаление несуществующего пользователя вернуло 204, вместо 404 или 400!")
-
