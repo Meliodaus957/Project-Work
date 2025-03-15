@@ -21,30 +21,9 @@ def inventory_page(driver):
 def cart_page(driver):
     return CartPage(driver)
 
-@allure.title("Test login with valid credentials")
-@allure.step("Login with standard user credentials")
-def test_login_valid(login_page, driver):
-    driver.get("https://www.saucedemo.com/")
-    login_page.login("standard_user", "secret_sauce")
-    inventory_page = InventoryPage(driver)
-    inventory_page.wait_for_element(*InventoryPage.INVENTORY_ITEMS)
 
-    inventory_items = inventory_page.get_inventory_items()
-    assert len(inventory_items) > 0
-
-
-@allure.title("Test login with invalid credentials")
-@allure.step("Login with invalid user credentials")
-def test_login_invalid(login_page, driver):
-    login_page.driver.get("https://www.saucedemo.com/")
-    login_page.login("invalid_user", "wrong_password")
-
-    error_message = login_page.get_error_message()
-    assert "Epic sadface" in error_message
-
-
-@allure.title("Test inventory page is displayed after login")
-@allure.step("Check that inventory page is loaded")
+@allure.title("Тест отображения страницы товаров после входа")
+@allure.step("Проверка загрузки страницы товаров")
 def test_inventory_page_after_login(login_page, driver):
     login_page = LoginPage(driver)
     login_page.driver.get("https://www.saucedemo.com/")
@@ -57,37 +36,8 @@ def test_inventory_page_after_login(login_page, driver):
     assert "Sauce Labs Backpack" in inventory_items[0].text
 
 
-@allure.title("Test cart navigation")
-@allure.step("Check navigation to the cart page")
-def test_go_to_cart(login_page, driver):
-    login_page = LoginPage(driver)
-    login_page.driver.get("https://www.saucedemo.com/")
-    login_page.login("standard_user", "secret_sauce")
-
-    inventory_page = InventoryPage(driver)
-    inventory_page.wait_for_element(*InventoryPage.CART_BUTTON)
-    inventory_page.go_to_cart()
-
-    # Проверим, что на странице корзины есть элемент с корзиной
-    assert "Your Cart" in driver.page_source
-
-
-@allure.title("Test adding item to the cart")
-@allure.step("Add an item to the cart")
-def test_add_item_to_cart(driver, login_page):
-    login_page = LoginPage(driver)
-    login_page.driver.get("https://www.saucedemo.com/")
-    login_page.login("standard_user", "secret_sauce")
-
-    inventory_page = InventoryPage(driver)
-    inventory_page.add_item_to_cart(0)
-
-    cart_item_count = inventory_page.get_cart_item_count()
-    assert cart_item_count > 0
-
-
-@allure.title("Test logout functionality")
-@allure.step("Logout from the application")
+@allure.title("Тест функциональности выхода")
+@allure.step("Выход из приложения")
 def test_logout(driver, login_page):
     login_page = LoginPage(driver)
     login_page.driver.get("https://www.saucedemo.com/")
@@ -105,32 +55,8 @@ def test_logout(driver, login_page):
     assert "Swag Labs" in driver.title
 
 
-@allure.title("Test error for missing credentials")
-@allure.step("Try login without credentials")
-def test_login_empty(driver, login_page):
-    login_page.driver.get("https://www.saucedemo.com/")
-    login_page.login("", "")
-
-    error_message = login_page.get_error_message()
-    assert "Epic sadface" in error_message
-
-
-@allure.title("Test adding multiple items to the cart")
-@allure.step("Add multiple items to the cart")
-def test_add_multiple_items_to_cart(driver, login_page):
-    login_page.driver.get("https://www.saucedemo.com/")
-    login_page.login("standard_user", "secret_sauce")
-
-    inventory_page = InventoryPage(driver)
-    inventory_page.add_item_to_cart(0)
-    inventory_page.add_item_to_cart(1)
-
-    cart_item_count = inventory_page.get_cart_item_count()
-    assert cart_item_count == 2
-
-
-@allure.title("Test sorting items by price")
-@allure.step("Sort inventory items by price")
+@allure.title("Тест сортировки товаров по цене")
+@allure.step("Сортировка товаров по цене")
 def test_sort_by_price(driver, login_page):
     login_page.driver.get("https://www.saucedemo.com/")
     login_page.login("standard_user", "secret_sauce")
@@ -154,8 +80,8 @@ def test_sort_by_price(driver, login_page):
     assert "Sauce Labs Onesie" in first_item_title  # "Sauce Labs Onesie" - это товар с минимальной ценой
 
 
-@allure.title("Test add item to cart and check cart")
-@allure.step("Add item to the cart and verify it's in the cart")
+@allure.title("Тест добавления товара в корзину и проверки корзины")
+@allure.step("Добавление товара в корзину и проверка его наличия в корзине")
 def test_add_item_to_cart(driver, cart_page, login_page, inventory_page):
 
     login_page.driver.get("https://www.saucedemo.com/")
@@ -188,3 +114,95 @@ def test_add_item_to_cart(driver, cart_page, login_page, inventory_page):
 
     # Проверим, что добавленный товар есть в корзине
     assert "Sauce Labs Backpack" in cart_item_names
+
+
+@allure.title("Тест входа с валидными учетными данными")
+@allure.step("Вход с учетными данными стандартного пользователя")
+def test_login_valid(login_page, driver):
+    driver.get("https://www.saucedemo.com/")
+    login_page.login("standard_user", "secret_sauce")
+    inventory_page = InventoryPage(driver)
+    inventory_page.wait_for_element(*InventoryPage.INVENTORY_ITEMS)
+
+    inventory_items = inventory_page.get_inventory_items()
+    # Добавляем список товаров в отчет
+    allure.attach(str(inventory_items), name="Список товаров", attachment_type=allure.attachment_type.TEXT)
+
+    assert len(inventory_items) > 0
+
+
+@allure.title("Тест входа с неверными учетными данными")
+@allure.step("Вход с неверными учетными данными")
+def test_login_invalid(login_page, driver):
+    login_page.driver.get("https://www.saucedemo.com/")
+    login_page.login("invalid_user", "wrong_password")
+
+    error_message = login_page.get_error_message()
+    # Добавляем сообщение об ошибке в отчет
+    allure.attach(error_message, name="Сообщение об ошибке", attachment_type=allure.attachment_type.TEXT)
+
+    assert "Epic sadface" in error_message
+
+
+@allure.title("Тест перехода в корзину")
+@allure.step("Проверка перехода на страницу корзины")
+def test_go_to_cart(login_page, driver):
+    login_page = LoginPage(driver)
+    login_page.driver.get("https://www.saucedemo.com/")
+    login_page.login("standard_user", "secret_sauce")
+
+    inventory_page = InventoryPage(driver)
+    inventory_page.wait_for_element(*InventoryPage.CART_BUTTON)
+    inventory_page.go_to_cart()
+
+    # Сохраняем содержимое страницы корзины
+    allure.attach(driver.page_source, name="Содержимое корзины", attachment_type=allure.attachment_type.HTML)
+
+    assert "Your Cart" in driver.page_source
+
+
+@allure.title("Тест добавления товара в корзину")
+@allure.step("Добавление товара в корзину")
+def test_add_item_to_cart(driver, login_page):
+    login_page = LoginPage(driver)
+    login_page.driver.get("https://www.saucedemo.com/")
+    login_page.login("standard_user", "secret_sauce")
+
+    inventory_page = InventoryPage(driver)
+    inventory_page.add_item_to_cart(0)
+
+    cart_item_count = inventory_page.get_cart_item_count()
+    # Сохраняем количество товаров в корзине
+    allure.attach(str(cart_item_count), name="Количество товаров в корзине", attachment_type=allure.attachment_type.TEXT)
+
+    assert cart_item_count > 0
+
+
+@allure.title("Тест ошибки при отсутствии учетных данных")
+@allure.step("Попытка входа без указания учетных данных")
+def test_login_empty(driver, login_page):
+    login_page.driver.get("https://www.saucedemo.com/")
+    login_page.login("", "")
+
+    error_message = login_page.get_error_message()
+    # Сохраняем сообщение об ошибке
+    allure.attach(error_message, name="Сообщение об ошибке", attachment_type=allure.attachment_type.TEXT)
+
+    assert "Epic sadface" in error_message
+
+
+@allure.title("Тест добавления нескольких товаров в корзину")
+@allure.step("Добавление нескольких товаров в корзину")
+def test_add_multiple_items_to_cart(driver, login_page):
+    login_page.driver.get("https://www.saucedemo.com/")
+    login_page.login("standard_user", "secret_sauce")
+
+    inventory_page = InventoryPage(driver)
+    inventory_page.add_item_to_cart(0)
+    inventory_page.add_item_to_cart(1)
+
+    cart_item_count = inventory_page.get_cart_item_count()
+    # Сохраняем количество товаров в корзине
+    allure.attach(str(cart_item_count), name="Количество товаров в корзине", attachment_type=allure.attachment_type.TEXT)
+
+    assert cart_item_count == 2
