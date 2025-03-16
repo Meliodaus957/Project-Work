@@ -139,7 +139,7 @@ docker run --rm qa-autotests
 
  ┃ ┣ 📜 test_ui.py         # UI-тесты
 
- ┃ ┣ 📜 apiclient.py       # Апи-клиент
+ ┃ ┣ 📜 apiclient.py       # API-клиент
 
  ┃ ┣ 📜 test_api.py        # API-тесты
 
