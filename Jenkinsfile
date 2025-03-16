@@ -6,6 +6,12 @@ pipeline {
         PATH = "${env.PATH}:${env.ALLURE_HOME}"
     }
 
+    parameters {
+        string(name: 'EXECUTOR', defaultValue: 'selenoid', description: 'Адрес Selenoid')
+        string(name: 'BROWSER', defaultValue: 'chrome', description: 'Браузер')
+        string(name: 'BV', defaultValue: 'latest', description: 'Версия браузера')
+    }
+
     stages {
         stage('Checkout') {
             steps {
