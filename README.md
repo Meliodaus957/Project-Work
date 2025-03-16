@@ -32,8 +32,11 @@ Frontend (UI-тесты): https://www.saucedemo.com/
 Backend (API-тесты): https://reqres.in/
 
 ✅ Используется PageObject для UI-тестов.
+
 ✅ Тесты запускаются в Jenkins.
+
 ✅ Подключён Allure для отчётности.
+
 ✅ Логи пишутся в файл с ротацией.
 
 
