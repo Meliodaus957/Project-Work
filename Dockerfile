@@ -17,7 +17,7 @@ COPY . /app
 COPY wait-for-it.sh /app/wait-for-it.sh
 RUN chmod +x /app/wait-for-it.sh
 
-# Запускаем wait-for-it и pytest после того, как OpenCart будет доступен
+# Запускаем pytest
 ENTRYPOINT ["pytest"]
 
 # Команда, которая будет выполнена после того, как wait-for-it.sh завершит ожидание
