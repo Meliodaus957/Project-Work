@@ -21,4 +21,4 @@ RUN chmod +x /app/wait-for-it.sh
 ENTRYPOINT ["pytest", "-q"]
 
 # Команда, которая будет выполнена после того, как wait-for-it.sh завершит ожидание
-CMD ["pytest", "-v", "tests/ui_test", "tests/api_test", "--browser=chrome", "--bv=latest", "--executor=selenoid"]
+CMD ["pytest", "-v", "tests/ui_test", "tests/api_test", "--browser=chrome", "--bv=latest", "--executor=localhost"]
