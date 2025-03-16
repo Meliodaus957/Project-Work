@@ -12,10 +12,8 @@ WORKDIR /app
 COPY requirements.txt /app/
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Копируем код и скрипт ожидания
+# Копируем код 
 COPY . /app
-COPY wait-for-it.sh /app/wait-for-it.sh
-RUN chmod +x /app/wait-for-it.sh
 
 # Запускаем pytest
 ENTRYPOINT ["pytest"]
