@@ -62,18 +62,14 @@ Backend (API-тесты): https://reqres.in/
 
 pip install -r requirements.txt
 
-2️⃣ Установите браузерный драйвер (Chrome)
-# Mac / Linux
+2️⃣ Установите selenoid
+# Mac / Linux / Windows
 
-brew install chromedriver
+https://aerokube.com/selenoid/latest/
 
-# Windows (скачайте вручную)
+3️⃣ Запустите Selenoid и Jenkins в одной сети
 
-https://sites.google.com/chromium.org/driver/
-
-3️⃣ Запустите Selenium Grid (если нужно)
-
-docker-compose up -d selenium-hub chrome-node
+docker-compose up -d 
 
 
 
