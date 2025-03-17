@@ -5,6 +5,7 @@ services:
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins
+    user: root
     ports:
       - "8082:8080"  # Jenkins будет доступен на порту 8082
       - "50000:50000" # Порт для Jenkins агент-соединений

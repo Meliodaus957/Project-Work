@@ -13,6 +13,13 @@ pipeline {
     }
 
     stages {
+
+        stage('Cleanup') {
+            steps {
+                deleteDir()  // Удаляет все файлы в workspace
+            }
+        }
+
         stage('Checkout') {
             steps {
                 git branch: 'main',
