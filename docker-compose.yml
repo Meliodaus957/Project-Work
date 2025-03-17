@@ -1,34 +1,21 @@
 version: "3.8"
 
-networks:
-  selenoid:
-    driver: bridge
 
 services:
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins
-    restart: unless-stopped
+    user: root
     ports:
-      - "8082:8080"   # Jenkins UI
-      - "50000:50000" # Для агентов
+      - "8082:8080"  # Jenkins будет доступен на порту 8082
+      - "50000:50000" # Порт для Jenkins агент-соединений
     volumes:
       - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock  # Монтируем сокет Docker для управления контейнерами
     networks:
       - selenoid
 
-  selenoid-ui:
-    image: aerokube/selenoid-ui:latest-release
-    container_name: selenoid-ui
-    restart: unless-stopped
-    ports:
-      - "8080:8080"  # UI для просмотра браузеров
-    networks:
-      - selenoid
-    depends_on:
-      - selenoid
 
 volumes:
   jenkins_home:
-  selenoid_config:
-  selenoid_logs:
+

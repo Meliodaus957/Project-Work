@@ -23,6 +23,20 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
+                script {
+                    // Устанавливаем Python и зависимости
+                    sh """
+                        apt update && apt install -y python3 python3-venv python3-pip unzip wget
+                        wget https://github.com/allure-framework/allure2/releases/latest/download/allure-2.22.0.tgz
+                        tar -zxvf allure-2.22.0.tgz -C /opt/
+                        ln -s /opt/allure-2.22.0/bin/allure /usr/bin/allure
+                    """
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
                 sh '''
                     python3 -m venv venv
                     . venv/bin/activate
