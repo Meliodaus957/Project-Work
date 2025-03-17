@@ -17,20 +17,6 @@ services:
     networks:
       - selenoid
 
-  selenoid:
-    image: aerokube/selenoid:latest-release
-    container_name: selenoid
-    restart: unless-stopped
-    ports:
-      - "4444:4444"  # WebDriver API
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"  # Доступ к Docker
-      - selenoid_config:/etc/selenoid
-      - selenoid_logs:/opt/selenoid/video
-    command: ["-limit", "5", "-retry-count", "1"]
-    networks:
-      - selenoid
-
   selenoid-ui:
     image: aerokube/selenoid-ui:latest-release
     container_name: selenoid-ui
