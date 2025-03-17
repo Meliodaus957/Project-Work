@@ -22,7 +22,7 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Install Python and Allure') {
             steps {
                 script {
                     // Устанавливаем Python и зависимости
